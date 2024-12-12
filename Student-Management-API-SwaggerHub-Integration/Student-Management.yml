@@ -3,10 +3,10 @@
   "info" : {
     "title" : "Group and Student Management API",
     "description" : "API for managing groups and students. Allows creation, updates, retrieval, and deletion of groups and students.",
-    "version" : "1.0.0"
+    "version" : "2.0.0"
   },
   "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/HEIHARENTSOA/Student-Management-API/1.0.0",
+    "url" : "https://virtserver.swaggerhub.com/HEIHARENTSOA/Student-Management-API/2.0.0",
     "description" : "SwaggerHub API Auto Mocking"
   }, {
     "url" : "https://mockserver.swaggerhub.com/HEIHARENTSOAStudent-Management-API/1.0.0",
@@ -355,8 +355,7 @@
             "description" : "Unique reference of the student."
           },
           "group" : {
-            "type" : "string",
-            "description" : "Name of the group the student belongs to."
+            "$ref" : "#/components/schemas/Group"
           }
         }
       },
