@@ -287,6 +287,129 @@
           }
         }
       }
+    },
+    "/students/{studentId}/group" : {
+      "put" : {
+        "tags" : [ "Student" ],
+        "summary" : "Assign a student to a specific group",
+        "description" : "Assigns a student identified by `studentId` to a specific group provided in the request body.",
+        "parameters" : [ {
+          "name" : "studentId",
+          "in" : "path",
+          "description" : "ID of the student to update.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Group"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated the student's group.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Student"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/students/group" : {
+      "put" : {
+        "tags" : [ "Student" ],
+        "summary" : "Bulk assign students to a group",
+        "description" : "Assigns multiple students to a single group. Expects an array of student IDs and the group ID in the request body.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/students_group_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated the group assignments for the students.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Student"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/students/{studentId}/groups/{groupId}" : {
+      "put" : {
+        "tags" : [ "Student" ],
+        "summary" : "Update a student's membership in a specific group",
+        "description" : "Updates a specific student's membership to a specific group.",
+        "parameters" : [ {
+          "name" : "studentId",
+          "in" : "path",
+          "description" : "ID of the student to update.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "groupId",
+          "in" : "path",
+          "description" : "ID of the group to update membership for.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "description" : "Optional properties for additional configuration."
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated the student's membership in the group.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Student"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -371,6 +494,23 @@
             }
           }
         } ]
+      },
+      "students_group_body" : {
+        "required" : [ "groupId", "studentIds" ],
+        "type" : "object",
+        "properties" : {
+          "groupId" : {
+            "type" : "string",
+            "description" : "ID of the group to assign students to."
+          },
+          "studentIds" : {
+            "type" : "array",
+            "description" : "List of student IDs to assign to the group.",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
       }
     }
   }
